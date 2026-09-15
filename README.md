@@ -1,2 +1,1 @@
-# helpdesk-ticket-system
-Système de gestion de tickets de support avec file de priorité — projet personnel
+Système de gestion de tickets de support technique avec file de priorité, développé en Java.
