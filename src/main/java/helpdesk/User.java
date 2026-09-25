@@ -19,8 +19,6 @@ public class User{
         this.role = role;
         this.sel= PasswordUtils.genererSel(16);
         this.motDePasseHacher = PasswordUtils.hacher(motDePasse, sel);
-        
-
 
     }
 
@@ -53,11 +51,9 @@ public class User{
     }
     
 
-
     public byte[] getSel(){
         return sel;
     }
-
 
 
     public Role getRole(){

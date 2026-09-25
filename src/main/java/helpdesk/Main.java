@@ -1,9 +1,8 @@
 package helpdesk;
-
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Scanner;
 
 
 public class Main {
@@ -11,44 +10,64 @@ public class Main {
 
     public static void main(String[] args) {
 
-        User user1 = new User(1, "Nina", "raima@gmail.com","1234567".getBytes(),Role.Client );
 
-        Ticket ticket1 = new Ticket(1, "La vie est belle", "Et cetait lhistoire de deux femme, des soeurs", Priorite.Moyenne, Statut.Ouvert, LocalDateTime.now(), user1.getId());
+        Scanner scanner = new Scanner(System.in);
 
-        Ticket ticket2 = new Ticket(2,"Alice au pays des merveils", "qu'on lui coupe la tete", Priorite.Basse, Statut.EnCours, LocalDateTime.now(),user1.getId());
+        System.out.println("=== Systeme de Gestion de tickets ===");
+        System.out.println("1. Créer un ticket");
+        System.out.println("2. Traiter le prochain ticket");
+        System.out.println("3. Quitter");
+        System.out.println("Ton choix :");
 
-        Ticket ticket3 = new Ticket(3, "ladybug", "paris cest magique", Priorite.Critique, Statut.Resolu, LocalDateTime.now(), user1.getId());
-              
-        Ticket ticket4 = new Ticket(4, "ladybug", "paris cest magique", Priorite.Haute, Statut.Resolu, LocalDateTime.now(), user1.getId());
-
-        // byte[] motdepasseHacher = user1.getMotDePasseHache();
-
-        // String s = Base64.getEncoder().encodeToString(user1.getMotDePasseHache());
-
-        System.out.println(Base64.getEncoder().encodeToString(user1.getMotDePasseHache()));
-
-        System.out.println();
-
-
-
-
-
+    
+        User user1 = new User(1, "Nina", "raima@gmail.com","1234567".getBytes(), Role.Client );
         PriorityQueue<Ticket> pq = new PriorityQueue<>( Comparator.comparing((Ticket t) -> t.getPriorite()).reversed());
         TicketManager ticketManager = new TicketManager(pq);
+        int id = 1;
 
-        ticketManager.ajouterTicket(ticket1);
-        ticketManager.ajouterTicket(ticket3);
-        ticketManager.ajouterTicket(ticket2);
-        ticketManager.ajouterTicket(ticket4);
+        menu: while(true)
+        {
+            String choix = scanner.nextLine();
+
+            switch (choix)
+            {
+                case "1":
+                   
+                    System.out.println("Entrer le titre, la description, la priorite");
+                    String titre = scanner.nextLine();
+                    String description = scanner.nextLine();
+                    String priorite = scanner.nextLine();
+                    Priorite p = Priorite.valueOf(priorite);
+                    Ticket t1 = new Ticket(id, titre, description, p, Statut.Ouvert, LocalDateTime.now(),user1.getId());
+                    ticketManager.ajouterTicket(t1);
+                    id++;
+                    break;
 
 
-        Ticket t = ticketManager.traiterProchainTicket();
-        while(t != null){
-            System.out.println(t.getPriorite() + " : " + t.getDescription());
+                case "2":
 
-            t = ticketManager.traiterProchainTicket();
+                    Ticket t = ticketManager.traiterProchainTicket();
+                    if(t != null){
+                        System.out.println(t.getPriorite() + " : " + t.getDescription());
+                    }else{
+                        System.out.println("Aucun ticket a traiter.");
+                    }
+
+                    break;
+
+                case "3":
+                    break menu;
+                    
+            }
+
+            System.out.println("=== Systeme de Gestion de tickets ===");
+            System.out.println("1. Créer un ticket");
+            System.out.println("2. Traiter le prochain ticket");
+            System.out.println("3. Quitter");
+            System.out.println("Ton choix :");
+
+
         }
-        
         
     
 
