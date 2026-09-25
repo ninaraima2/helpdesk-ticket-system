@@ -6,16 +6,22 @@ public class User{
     private int id;
     private String name;
     private String email;
-    private String motDePasse;
+    private byte[] sel;
+    private byte[] motDePasseHacher;
     private Role role;
 
-    public User( int id, String name, String email, String motDePasse, Role role){
+
+    public User( int id, String name, String email, byte[] motDePasse, Role role){
 
         this.id = id;
         this.name = name;
         this. email = email;
-        this.motDePasse = motDePasse;
         this.role = role;
+        this.sel= PasswordUtils.genererSel(16);
+        this.motDePasseHacher = PasswordUtils.hacher(motDePasse, sel);
+        
+
+
     }
 
     public int getId(){
@@ -42,13 +48,17 @@ public class User{
         this.email = nouveauEmail;
     }
 
-    public String getMotDePasse(){
-        return motDePasse;
+    public byte[] getMotDePasseHache(){
+        return motDePasseHacher;
     }
     
-    public void setMotDePasse(String nouveauMotDePasse){
-        this.motDePasse = nouveauMotDePasse;
+
+
+    public byte[] getSel(){
+        return sel;
     }
+
+
 
     public Role getRole(){
         return role;

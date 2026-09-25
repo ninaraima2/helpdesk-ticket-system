@@ -18,7 +18,7 @@ public class PasswordUtils {
         return salt;
 
     }
-    public static byte[] hash(byte[] motDePasse, byte[] sel){
+    public static byte[] hacher(byte[] motDePasse, byte[] sel){
 
         try {
                 
